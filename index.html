@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slitherlink</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li class="active" data-tab="puzzles">Puzzles</li>
+            <li data-tab="generator">Generator</li>
+            <li data-tab="solver">Solver</li>
+            <li data-tab="rules">Rules</li>
+            <li data-tab="about">About</li>
+        </ul>
+    </nav>
+
+    <!-- Puzzles Tab -->
+    <div class="tab-content active" id="puzzles">
+        <div class="header">
+            <h1>Slitherlink Puzzles</h1>
+            <div class="controls">
+                <div class="control-group">
+                    <label>Size: <input type="number" id="puzzleSize" min="5" max="10" value="8"></label>
+                    <label>Difficulty: 
+                        <select id="puzzleDifficulty">
+                            <option value="0">Easy</option>
+                            <option value="1" selected>Medium</option>
+                            <option value="2">Hard</option>
+                        </select>
+                    </label>
+                    <button id="puzzleDisplayNext">Display</button>
+                </div>
+                <div class="control-group">
+                    <input type="text" id="puzzleString" placeholder="Enter puzzle string">
+                    <button id="puzzleDisplayCode">Display</button>
+                </div>
+            </div>
+        </div>
+        <div class="game-container">
+            <canvas id="puzzleCanvas"></canvas>
+        </div>
+        <div class="action-buttons">
+            <button id="puzzleUndo">←</button>
+            <button id="puzzleRedo">→</button>
+            <button id="puzzleCheck">Check</button>
+        </div>
+    </div>
+
+    <!-- Generator Tab -->
+    <div class="tab-content" id="generator">
+        <div class="header">
+            <h1>Slitherlink Generator</h1>
+            <div class="controls">
+                <div class="control-group">
+                    <label>Rows: <input type="number" id="genRows" min="5" max="10" value="5"></label>
+                    <label>Columns: <input type="number" id="genCols" min="5" max="10" value="5"></label>
+                    <label>Difficulty: 
+                        <select id="genDifficulty">
+                            <option value="1">Easy</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Hard</option>
+                        </select>
+                    </label>
+                    <button id="generatePuzzle">Generate</button>
+                </div>
+                <div class="control-group">
+                    <input type="text" id="generatedPuzzleString" placeholder="Generated puzzle string" readonly>
+                    <button id="copyPuzzleString">📋 Copy</button>
+                </div>
+            </div>
+        </div>
+        <div class="game-container">
+            <canvas id="generatorCanvas"></canvas>
+        </div>
+    </div>
+
+    <!-- Solver Tab -->
+    <div class="tab-content" id="solver">
+        <div class="header">
+            <h1>Slitherlink Solver</h1>
+            <div class="controls">
+                <div class="control-group">
+                    <label>Rows: <input type="number" id="solRows" min="5" max="10" value="5"></label>
+                    <label>Columns: <input type="number" id="solCols" min="5" max="10" value="5"></label>
+                    <button id="displayPuzzleSolver">Display</button>
+                </div>
+                <div class="control-group">
+                    <input type="text" id="solverString" placeholder="Enter puzzle string">
+                    <button id="solDisplayFromString">Display</button>
+                </div>
+            </div>
+        </div>
+        <div class="game-container">
+            <canvas id="solverCanvas"></canvas>
+        </div>
+        <div class="action-buttons">
+            <button id="solvePuzzle">Solve</button>
+        </div>
+    </div>
+
+    <!-- Rules Tab -->
+    <div class="tab-content" id="rules">
+        <div class="header">
+            <h1>Slitherlink Rules</h1>
+        </div>
+        <div class="text-content">
+            <h2>Basic Rules</h2>
+            <p>Slitherlink is a logic puzzle played on a grid of dots. Some squares between the dots contain numbers, called clues. The goal is to draw a single closed loop by connecting dots horizontally and vertically, following the clues. Each clue indicates how many of its four edges belong to the loop.</p>
+        </div>
+        <div class="text-content">
+            <h2>User Guide</h2>
+            <p>Learn how to use the website below:</p>
+            
+            <h3>Puzzles Tab</h3>
+            <p>In the Puzzles tab, you can find puzzles in two ways:</p>
+            <ul>
+                <li><strong>Random Puzzle:</strong> Select the size and difficulty, then click <strong>Display</strong> to load a puzzle from a pregenerated database.</li>
+                <li><strong>Custom Puzzle:</strong> Enter a puzzle string in the input field and click <strong>Display</strong> to load it.</li>
+            </ul>
+            <p>Left-click between dots to connect them and right-click to mark no connection. Use the back and forward arrows at the bottom to undo and redo moves. Once you solve the puzzle, click <strong>Check</strong> to verify your solution.</p>
+    
+            <h3>Generator Tab</h3>
+            <p>In the Generator tab, create custom puzzles. Select rows, columns, and difficulty, then click <strong>Generate</strong>. The puzzle appears in the grid, and its code is displayed. Click <strong>Copy</strong> to save it.</p>
+            <p>To prevent overuse, the generator is limited to 100 unique puzzles per size.</p>
+    
+            <h3>Solver Tab</h3>
+            <p>Solve puzzles automatically. You can enter the puzzle in one of the following two ways:</p>
+            <ul>
+                <li><strong>Blank Grid:</strong> Select rows and columns and click <strong>Display</strong> to create an empty grid. Left-click cells to increase clues and right-click to decrease them.</li>
+                <li><strong>Puzzle String:</strong> Enter a puzzle string and click <strong>Display</strong> to load it.</li>
+            </ul>
+            <p>Click <strong>Solve</strong> to display the solution in the grid.</p>
+        </div>
+    </div>
+
+    <!-- About Tab -->
+    <div class="tab-content" id="about">
+        <div class="header">
+            <h1>About This Project</h1>
+        </div>
+        <div class="text-content">
+            <p>During the summer of 2024 I found myself in the following situation. I was lying on the beach after solving quite a few crosswords with my girlfriend. She also had one of those Sudoku booklets, but solving Sudoku is a very overrated activity and additionally, she geeked the hell out of those puzzles when she was younger, so not wanting to be told by her what number to write into which square, I did what any reasonable person would do in my position. I took my phone, opened Google Play and searched for a nice game I could play. Of course, since there is nothing worse than being totally unproductive, I was looking for a game that would be at least a little bit mentally challenging, so that I could pretend I was doing something useful. That’s how I discovered Slitherlink. I played it for a while and I really liked it, so in the week between September 23rd and 29th, 2024, as a personal project, I programmed a C++ solver and generator for slitherlink puzzles.</p>
+            <p>Later that year I was told by a friend of mine (who ditched mathematics for the biggest citation-laundering field — machine learning) about the fact that modern AI is able to create websites. I decided to try it by building a website for my slitherlink solver. The AI was in fact not able to write JavaScript code that did what I needed. At the time, I already had a job (where I’m wildly underpaid for my workload), so I was only able to work on this website for maybe a few hours here and there. But after far too long, I finally got the website to a semi-functional state. Try it out and let me know what you think!</p>
+
+            <!--
+            <p class="professional-link">
+                For more of my work, you can find me at my website
+                <a href="https://sites.google.com/view/matevzmiscic/matevz-miscic" target="_blank" rel="noopener noreferrer">Matevž Miščič</a>.
+            </p>
+            -->
+        </div>
+    </div>
+
+    <script src="solver.js"></script>
+    <script type="module" src="puzzle.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
